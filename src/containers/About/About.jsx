@@ -4,6 +4,9 @@ import { urlFor, client } from '../../client'
 import {AppWrap, MotionWrap} from "../../wrapper";
 
 import './About.scss'
+import AlertTitle from "@mui/material/AlertTitle";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 /**
  * About component fetches and displays data type "abouts" from the client.
@@ -22,6 +25,18 @@ const About = () => {
     const [abouts, setAbouts] = React.useState([])
 
     /**
+     * Tracks if an error occurred while loading testimonials.
+     * @type {boolean}
+     */
+    const [isError_abouts, setIsError_abouts] = React.useState(false);
+
+    /**
+     * Holds the error message or details for testimonials loading errors.
+     * @type {string}
+     */
+    const [error_abouts, setError_abouts] = React.useState("");
+
+    /**
      * `Runs after every rendering.
      *
      * The effect is fetching data of type 'abouts' from the client and
@@ -32,18 +47,27 @@ const About = () => {
      */
     React.useEffect(() => {
         const query = '*[_type == "abouts"]';
-        //Todo: Add proper error handling
         client.fetch(query).then((data) => {
             setAbouts(data);
-            }
-        )
+            setIsError_abouts(false)
+        }).catch((error) => {
+            setIsError_abouts(true)
+            setError_abouts(error)
+        })
     }, []);
 
     return (
         <>
             <h2 className="head-text"> Creating <span>seamless experiences</span> <br /> and <span>relevant solutions </span> </h2>
             <div className="app__profiles">
-                {abouts.map((about, index)=> (
+                {abouts.length === 0 && <CircularProgress/>}
+                {isError_abouts &&
+                    <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        :( Looks like something went wrong: <br/> {error_abouts}
+                    </Alert>
+                }
+                {abouts.length && abouts.map((about, index)=> (
                     <motion.div
                         whileInView={{opacity: 1}}
                         whileHover={{scale: 1.1}}

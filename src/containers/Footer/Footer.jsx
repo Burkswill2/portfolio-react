@@ -1,15 +1,19 @@
 import React from 'react';
-import { images } from '../../constants';
+import {images} from '../../constants';
 import {AppWrap, MotionWrap} from "../../wrapper";
-import { client } from "../../client";
+import {client} from "../../client";
+import {Formik, Form, Field} from 'formik';
+import * as Yup from 'yup';
 
 import './Footer.scss'
 
 const Footer = () => {
 
     const [formData, setFormData] = React.useState({
-        name: "" ,
+        firstName: "",
+        lastName: "",
         email: "",
+        phone: "",
         message: "",
     })
 
@@ -18,8 +22,10 @@ const Footer = () => {
     const [loading, setLoading] = React.useState(false);
 
     const {
-        name,
+        firstName,
+        lastName,
         email,
+        phone,
         message,
     } = formData;
 
@@ -28,7 +34,9 @@ const Footer = () => {
 
         const contact = {
             _type: 'contact',
-            name: name,
+            fistName: firstName,
+            lastName: lastName,
+            phone: phone,
             email: email,
             message: message,
         }
@@ -36,13 +44,35 @@ const Footer = () => {
             .then(() => {
                 setLoading(false);
                 setIsFormSubmitted(true);
-            })
+            }).catch((error) => {
+
+        })
     }
 
     const handleChangeInput = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData({...formData, [name]: value})
     }
+
+
+    const contactSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        email: Yup.string()
+            .email('Invalid email')
+            .required('Required'),
+        phone: Yup.string()
+            .matches(/^[0-9]+$/, "Must be only digits")
+            .min(10, 'Must be exactly 10 digits')
+            .max(10, 'Must be exactly 10 digits'),
+        message: Yup.string().max(255)
+    });
 
 
     return (
@@ -59,31 +89,70 @@ const Footer = () => {
                 </div>
             </div>
             {!isFormSubmitted ?
-                <div className="app__footer-form app__flex">
-                    <div className="app__flex">
-                        <input className="p-text" type="text" placeholder="Your Name" name="name" value={name}
-                               onChange={handleChangeInput}/>
-                    </div>
+                <Formik
+                    initialValues={{
+                        firstName: '',
+                        lastName: '',
+                        email: '',
+                        phone: '',
+                        message: '',
+                    }}
+                    validationSchema={contactSchema}
+                    onSubmit={(values, { setSubmitting }) => {
+                        handleSubmit(values);
+                        setSubmitting(false);
+                        console.log(values);
+                    }}
+                >
+                    {({errors, touched}) => (
+                        <Form
+                            className="app__footer-form app__flex">
+                            <div className="app__flex">
+                                <input name="firstName"
+                                       className="p-text"
+                                       placeholder="Your First Name"
 
-                    <div className="app__flex">
-                        <input className="p-text" type="email" placeholder="Your Email" name="email" value={email}
-                               onChange={handleChangeInput}/>
-                    </div>
-                    <div>
-                    <textarea
-                        className="p-text"
-                        placeholder="Your Message"
-                        value={message}
-                        name="message"
-                        onChange={handleChangeInput}
-                    />
-                    </div>
-                    <button
-                        type="button"
-                        className="p-text"
-                        onClick={handleSubmit}>{loading ? 'Sending' : 'Send Message'}
-                    </button>
-                </div>
+                                />
+                                {errors.firstName && touched.firstName ? (
+                                    <div>{errors.firstName}</div>
+                                ) : null}
+                            </div>
+                            <div className="app__flex">
+                                <Field name="lastName"
+                                       className="p-text"
+                                       placeholder="Your Last Name"
+                                />
+                                {errors.lastName && touched.lastName ? (
+                                    <div>{errors.lastame}</div>
+                                ) : null}
+                            </div>
+                            <div className="app__flex">
+                                <Field name="email"
+                                       className="p-text"
+                                       placeholder="Your Email"
+                                />
+                                {errors.email && touched.email ? (
+                                    <div>{errors.email}</div>
+                                ) : null}
+                            </div>
+                            <div className="app__flex">
+                                <Field
+                                    name="message"
+                                    className="p-text"
+                                    placeholder="Leave a message"
+                                    component="textarea" rows="4" value={""}
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="p-text"
+                                disabled={isSubmitting}
+                            >{loading ? 'Sending' : 'Send Message'}
+                            </button>
+                        </Form>
+                    )}
+
+                </Formik>
                 :
                 <div>
                     <h3 className="head-text">Thank you for getting in touch!</h3>
@@ -94,8 +163,9 @@ const Footer = () => {
     );
 }
 
-export default AppWrap(
+    export default AppWrap(
     MotionWrap(Footer, 'app__footer'),
-    'contact',
-    'app__whitebg',
-);
+        'contact',
+        'app__whitebg',
+)
+;

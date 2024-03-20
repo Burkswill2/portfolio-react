@@ -6,6 +6,9 @@ import { urlFor, client } from "../../client";
 
 import './Skills.scss'
 import { Fade } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 
 /**
@@ -27,6 +30,31 @@ const Skills = () => {
     const [experience, setExperience] = React.useState([]);
     const [skills, setSkills] = React.useState([]);
 
+    /**
+     * Tracks if an error occurred while loading skills.
+     * @type {boolean}
+     */
+    const [isError_skills, setIsError_skills] = React.useState(false);
+
+    /**
+     * Holds the error message or details for skills loading errors.
+     * @type {string}
+     */
+    const [error_skills, setError_skills] = React.useState("");
+
+    /**
+     * Tracks if an error occurred while loading experiences.
+     * @type {boolean}
+     */
+    const [isError_exp, setIsError_exp] = React.useState(false);
+
+    /**
+     * Holds the error message or details for experiences loading errors.
+     * @type {string}
+     */
+    const [error_exp, setError_exp] = React.useState("");
+
+
 
     /**
      * @callback useEffect - React hook for handling side effects.
@@ -36,14 +64,21 @@ const Skills = () => {
         const query_experiences = '*[_type == "experiences"]';
         const query_skills = '*[_type == "skills"]';
 
-        //Todo: Add proper error handling
         client.fetch(query_experiences).then((data) => {
             setExperience(data);
+            setIsError_exp(false)
+        }).catch((error)=>{
+            setIsError_exp(true)
+            setError_exp(error)
+
         })
 
-        //Todo: Add proper error handling
         client.fetch(query_skills).then((data) => {
             setSkills(data);
+            setIsError_skills(false)
+        }).catch((error)=> {
+            setIsError_skills(true)
+            setError_skills(error)
         })
     }, []);
 
@@ -62,7 +97,14 @@ const Skills = () => {
             <h2 className="head-text">Skills & Experience</h2>
             <div className="app__skills-container">
                 <motion.div className="app__skills-list">
-                    {skills.map((skill) => (
+                    {skills.length === 0 && <CircularProgress/>}
+                    {isError_skills &&
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            :( Looks like something went wrong: <br/> {error_skills}
+                        </Alert>
+                    }
+                    {skills.length && skills.map((skill) => (
                         <motion.div
                             whileInView={{ opacity: [0, 1] }}
                             transition={{ duration: 0.5 }}
@@ -77,7 +119,14 @@ const Skills = () => {
                     ))}
                 </motion.div>
                 <motion.div className="app__skills-exp">
-                    {experience.sort(compare).map((exp, index) => (
+                    {experience.length === 0 && <CircularProgress/>}
+                    {isError_exp &&
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            :( Looks like something went wrong: <br/> {error_exp}
+                        </Alert>
+                    }
+                    {experience.length && experience.sort(compare).map((exp, index) => (
                             <motion.div
                                 className="app__skills-exp-item"
                                 key={`${exp.year}-${index}`}
