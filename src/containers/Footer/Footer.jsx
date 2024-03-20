@@ -9,49 +9,35 @@ import './Footer.scss'
 
 const Footer = () => {
 
-    const [formData, setFormData] = React.useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        message: "",
-    })
+    const [isError_contact, setIsError_contact] = React.useState(false)
 
     const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
 
     const [loading, setLoading] = React.useState(false);
 
-    const {
-        firstName,
-        lastName,
-        email,
-        phone,
-        message,
-    } = formData;
 
-    const handleSubmit = () => {
-        setLoading(true);
+    const createContact = (formData) => {
+        console.log("marker")
 
         const contact = {
             _type: 'contact',
-            fistName: firstName,
-            lastName: lastName,
-            phone: phone,
-            email: email,
-            message: message,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phone: formData.phone,
+            email: formData.email,
+            message: formData.message,
         }
         client.create(contact)
             .then(() => {
                 setLoading(false);
                 setIsFormSubmitted(true);
+                setIsError_contact(false);
             }).catch((error) => {
-
+                console.log(error)
+            setIsError_contact(true);
+            setLoading(false);
+            setIsFormSubmitted(false);
         })
-    }
-
-    const handleChangeInput = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value})
     }
 
 
@@ -71,7 +57,7 @@ const Footer = () => {
             .matches(/^[0-9]+$/, "Must be only digits")
             .min(10, 'Must be exactly 10 digits')
             .max(10, 'Must be exactly 10 digits'),
-        message: Yup.string().max(255)
+        message: Yup.string().max(500).required()
     });
 
 
@@ -89,83 +75,115 @@ const Footer = () => {
                 </div>
             </div>
             {!isFormSubmitted ?
-                <Formik
-                    initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        phone: '',
-                        message: '',
-                    }}
-                    validationSchema={contactSchema}
-                    onSubmit={(values, { setSubmitting }) => {
-                        handleSubmit(values);
-                        setSubmitting(false);
-                        console.log(values);
-                    }}
-                >
-                    {({errors, touched}) => (
-                        <Form
-                            className="app__footer-form app__flex">
-                            <div className="app__flex">
-                                <input name="firstName"
-                                       className="p-text"
-                                       placeholder="Your First Name"
-
-                                />
-                                {errors.firstName && touched.firstName ? (
-                                    <div>{errors.firstName}</div>
-                                ) : null}
-                            </div>
-                            <div className="app__flex">
-                                <Field name="lastName"
-                                       className="p-text"
-                                       placeholder="Your Last Name"
-                                />
-                                {errors.lastName && touched.lastName ? (
-                                    <div>{errors.lastame}</div>
-                                ) : null}
-                            </div>
-                            <div className="app__flex">
-                                <Field name="email"
-                                       className="p-text"
-                                       placeholder="Your Email"
-                                />
-                                {errors.email && touched.email ? (
-                                    <div>{errors.email}</div>
-                                ) : null}
-                            </div>
-                            <div className="app__flex">
-                                <Field
-                                    name="message"
+                <>
+                    <Formik
+                        initialValues={{
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            phone: '',
+                            message: '',
+                        }}
+                        validationSchema={contactSchema}
+                        onSubmit={(values, {setSubmitting}) => {
+                            setTimeout(() => {
+                                setSubmitting(false)
+                                console.log(values);
+                                setLoading(true);
+                                createContact(values)
+                            }, 400)
+                        }}
+                    >
+                        {({handleSubmit, isSubmitting, errors, touched}) => (
+                            <Form onSubmit={handleSubmit}
+                                  className="app__footer-form app__flex">
+                                <div className="app__flex">
+                                    <Field name="firstName"
+                                           id="fistName"
+                                           className="p-text"
+                                           placeholder="Your First Name"
+                                    />
+                                    {errors.firstName && touched.firstName ? (
+                                        <div className="e-text app__flex">{errors.firstName}</div>
+                                    ) : null}
+                                </div>
+                                <div className="app__flex">
+                                    <Field name="lastName"
+                                           id="lastName"
+                                           className="p-text"
+                                           placeholder="Your Last Name"
+                                    />
+                                    {errors.lastName && touched.lastName ? (
+                                        <div className="e-text app__flex" >{errors.lastName}</div>
+                                    ) : null}
+                                </div>
+                                <div className="app__flex">
+                                    <Field name="email"
+                                           id="email"
+                                           className="p-text"
+                                           placeholder="Your Email"
+                                    />
+                                    {errors.email && touched.email ? (
+                                        <div className="e-text app__flex" >{errors.email}</div>
+                                    ) : null}
+                                </div>
+                                <div className="app__flex">
+                                    <Field name="phone"
+                                           id="phone"
+                                           className="p-text"
+                                           placeholder="Your Phone Number (Optional)"
+                                    />
+                                    {errors.phone && touched.phone ? (
+                                        <div className="e-text app__flex">{errors.phone}</div>
+                                    ) : null}
+                                </div>
+                                <div className="app__flex">
+                                    <Field
+                                        name="message"
+                                        id="message"
+                                        className="p-text"
+                                        placeholder="Leave a message"
+                                        component="textarea" rows="4"
+                                    />
+                                    {errors.message && touched.message ? (
+                                        <div className="e-text app__flex">{errors.message}</div>
+                                    ) : null}
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
                                     className="p-text"
-                                    placeholder="Leave a message"
-                                    component="textarea" rows="4" value={""}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="p-text"
-                                disabled={isSubmitting}
-                            >{loading ? 'Sending' : 'Send Message'}
-                            </button>
-                        </Form>
-                    )}
+                                >{loading ? 'Sending' : 'Send Message'}
+                                </button>
+                            </Form>
+                        )}
 
-                </Formik>
+                    </Formik>
+                </>
+
                 :
-                <div>
-                    <h3 className="head-text">Thank you for getting in touch!</h3>
-                </div>
+                <>
+                    {isError_contact &&
+                        <div>
+                            <h3 className="head-text">Thank you for getting in touch!</h3>
+                        </div>
+                    }
+                    {!isError_contact &&
+                        <div>
+                            <h3 className="head-text">⚠️ Something didn't go right. <br/> Let's still get in touch. Click an icon!</h3>
+                        </div>
+                    }
+                </>
+
             }
 
         </>
     );
 }
 
-    export default AppWrap(
+export default AppWrap(
     MotionWrap(Footer, 'app__footer'),
-        'contact',
-        'app__whitebg',
+    'contact',
+    'app__whitebg',
 )
 ;

@@ -78,6 +78,12 @@
 
     transition: all 0.3s ease-in-out;
 
+    .e-text {
+      display: flex ;
+      align-self: flex-start ;
+      font-size: small;
+    }
+
     input, textarea {
       width: 100%;
       padding: 0.95rem;
