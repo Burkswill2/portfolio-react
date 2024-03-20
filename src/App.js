@@ -26,7 +26,7 @@ const App = () => {
                           <Footer/>
                       </>
                   }/>
-                  <Route path="/WJB-Weather" element={<WeatherAppDemo/>}/>
+                  <Route path="WJB-Weather" element={<WeatherAppDemo/>}/>
               </Routes>
           </div>
       </Router>
