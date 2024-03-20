@@ -1,11 +1,12 @@
 import React from 'react';
 import { About, Footer, Header, Skills, Testimonial, Work } from './containers'
 import { Navbar } from './components'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.scss'
 import WeatherAppDemo from "./components/Pages/WeatherAppDemo";
 
 const App = () => {
+
   return (
       <Router basename="/">
           <div className="app">
