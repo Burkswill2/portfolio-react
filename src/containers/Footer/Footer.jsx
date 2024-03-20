@@ -163,12 +163,12 @@ const Footer = () => {
 
                 :
                 <>
-                    {isError_contact &&
+                    {!isError_contact &&
                         <div>
                             <h3 className="head-text">Thank you for getting in touch!</h3>
                         </div>
                     }
-                    {!isError_contact &&
+                    {isError_contact &&
                         <div>
                             <h3 className="head-text">⚠️ Something didn't go right. <br/> Let's still get in touch. Click an icon!</h3>
                         </div>
