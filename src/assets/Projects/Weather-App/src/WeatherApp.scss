@@ -1,0 +1,174 @@
+.app {
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-overlay);
+
+    .ErrorMessage {
+      height: 10px;
+    }
+
+    .container {
+      width: 50%;
+      margin: auto;
+      height: 80%;
+
+      border-color: red;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      padding: 1rem;
+
+      @media screen and (max-width: 1200px){
+        width: 70%;
+      }
+      @media screen and (max-width: 650px){
+        width: 100%;
+      }
+
+      .section {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 1rem;
+
+        @media screen and (min-width: 651px){
+            height: 90px;
+        }
+
+        @media screen and (max-width: 650px){
+          height: 45px;
+        }
+      }
+
+      .section__inputs {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: var(--section-overlay );
+
+        input {
+          border-radius: 10px;
+          width: 75%;
+          background-color: transparent;
+          border-color: #fef4f5;
+          color: #fef4f5;
+          padding: 0.25rem;
+          font-size: 15px;
+          font-weight: 200;
+
+          @media screen and (max-width: 650px){
+            border-radius: 8px;
+            width: 75%;
+            padding: 0.2rem;
+            font-size: 10px;
+            font-weight: 150;
+          }
+        }
+        button {
+          text-align: center;
+          padding: 8px 16px;
+          width: 20%;
+          border-radius: 10px;
+          height: auto;
+          background-color: #fef4f5;
+          border-color: #fef4f5;
+
+          @media screen and (max-width: 650px){
+            text-align: center;
+            padding: 4px 8px;
+            border-radius: 10px;
+            width: 50px;
+            height: auto;
+          }
+        }
+      }
+
+      .section__temperature {
+
+        height: 250px;
+        width: 100%;
+        padding: 1rem;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 1rem;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1px; /* Adjust this value to bring items closer */
+        background-color: var(--section-overlay );
+
+        @media screen and (max-width: 650px){
+          height: 45px;
+        }
+
+
+
+        .icon {
+          display: flex;
+          flex-direction: row;
+          gap: 0.1px;
+          align-items: center;
+          justify-content: space-around;
+          align-content: center;
+          width: 70%;
+          height: auto;
+
+
+        h3 {
+          font-size: 15px;
+          font-weight: 200;
+          text-transform: capitalize;
+          text-align: center;
+
+          @media screen and (max-width: 650px){
+            font-weight: 300;
+            font-size: 10px;
+
+          }
+          }
+
+          .image {
+            height: auto;
+            width: 160px;
+            margin: 0;
+
+            @media screen and (max-width: 650px){
+              width: 40px;
+            }
+          }
+        }
+
+        .temperature {
+          text-align: center;
+          display:flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          //width: 100%;
+          width: auto; /* Adjust width to auto to allow flex shrink */
+
+          h1 {
+            font-size: 60px;
+
+            @media screen and (max-width: 650px){
+              font-size: 18px;
+              white-space: nowrap;
+              margin-left: 10%;
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

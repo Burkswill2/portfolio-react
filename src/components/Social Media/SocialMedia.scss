@@ -1,0 +1,7 @@
+.app__social {
+  div {
+   .app__social-icon {
+     @media screen and (max-width: 2000px) {width: 25px; height: 25px }
+   }
+  }
+}

@@ -1,0 +1,14 @@
+.css-o6721r-MuiPaper-root-MuiAlert-root {
+  max-height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  @media screen and (max-width: 450px) {
+    max-height: 80px;
+  }
+}
+
+.MuiAlert-icon.css-1ytlwq5-MuiAlert-icon {
+  width: 5%;
+}
