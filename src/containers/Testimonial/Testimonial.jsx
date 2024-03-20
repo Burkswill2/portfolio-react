@@ -3,8 +3,12 @@ import { motion } from "framer-motion";
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi';
 import {AppWrap, MotionWrap} from "../../wrapper";
 import { urlFor, client } from "../../client";
+import AlertTitle from '@mui/material/AlertTitle';
+
 
 import './Testimonial.scss';
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 /**
  * `Testimonial` is a React component that displays a list of testimonials and brands.
@@ -38,6 +42,31 @@ const Testimonial = () => {
     const [currentIndex, setCurrentIndex] = React.useState(0)
 
     /**
+     * Tracks if an error occurred while loading testimonials.
+     * @type {boolean}
+     */
+    const [isError_testimonials, setIsError_testimonials] = React.useState(false);
+
+    /**
+     * Holds the error message or details for testimonials loading errors.
+     * @type {string}
+     */
+    const [error_testimonials, setError_testimonials] = React.useState("");
+
+    /**
+     * Tracks if an error occurred while loading brands.
+     * @type {boolean}
+     */
+    const [isError_brands, setIsError_brands] = React.useState(false);
+
+    /**
+     * Holds the error message or details for brands loading errors.
+     * @type {string}
+     */
+    const [error_brands, setError_brands] = React.useState("");
+
+
+    /**
      * @callback useEffect - React hook for handling side effects.
      * In this case, it fetches testimonials and brands data on the initial render.
      */
@@ -45,21 +74,28 @@ const Testimonial = () => {
         const query_testimonials = '*[_type == "testimonials"]'
         const query_brands = '*[_type == "brands"]'
 
-        //Todo: Add proper error handling
         client.fetch(query_testimonials)
             .then((data) => {
             setTestimonials(data);
-            console.log('Testimonials:', {data})
+            setIsError_testimonials(false)
 
-            })
+            }).catch((error) => {
+            setIsError_testimonials(true)
+            setError_testimonials(error)
+        })
 
-        //Todo: Add proper error handling
         client.fetch(query_brands)
             .then((data) => {
                 setBrands(data);
-                console.log('Brands:', {data})
-            })
+                setIsError_brands(false)
+            }).catch((error) => {
+            setIsError_brands(true)
+            setError_brands(error)
+
+        })
     },[])
+
+
 
     /**
      * @function handleClick - Function for handling the work filter functionality.
@@ -90,6 +126,13 @@ const Testimonial = () => {
 
     return (
         <>
+            {testimonials.length === 0 && <CircularProgress/>}
+            {isError_testimonials &&
+                <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    :( Looks like something went wrong: <br/> {error_testimonials}
+                </Alert>
+            }
             {testimonials.length &&
                 <>
                     <motion.div
@@ -117,17 +160,26 @@ const Testimonial = () => {
                     </div>
                 </>
             }
-            <div className="app__testimonials-brands app__flex" >
-                {brands.map((brand, index) => (
-                    <motion.div
-                        whileInView={{ opacity: [0,1] }}
-                        transition={{ duration: 0.5, type: 'tween'}}
-                        key={`${brand.name}-${index}`}
-                    >
-                        <img src={urlFor(brand.imgUrl)} alt={brand.name} />
-                    </motion.div>
-                ))}
-            </div>
+            {brands.length === 0 && <CircularProgress/>}
+            {isError_brands &&
+            <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                :( Looks like something went wrong: <br/> {error_brands}
+            </Alert>
+            }
+            {brands.length &&
+                <div className="app__testimonials-brands app__flex">
+                    {brands.map((brand, index) => (
+                        <motion.div
+                            whileInView={{opacity: [0, 1]}}
+                            transition={{duration: 0.5, type: 'tween'}}
+                            key={`${brand.name}-${index}`}
+                        >
+                            <img src={urlFor(brand.imgUrl)} alt={brand.name}/>
+                        </motion.div>
+                    ))}
+                </div>
+            }
         </>
     );
 }

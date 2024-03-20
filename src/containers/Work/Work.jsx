@@ -8,6 +8,8 @@ import {AppWrap, MotionWrap} from "../../wrapper";
 import { urlFor, client } from "../../client";
 
 import './Work.scss'
+import AlertTitle from "@mui/material/AlertTitle";
+import Alert from "@mui/material/Alert";
 
 
 /**
@@ -47,6 +49,19 @@ const Work = () => {
     const [works, setWorks] = React.useState([])
     const [filterWork, setFilterWork] = React.useState([])
 
+    /**
+     * Tracks if an error occurred while loading testimonials.
+     * @type {boolean}
+     */
+    const [isError_works, setIsError_works] = React.useState(false);
+
+    /**
+     * Holds the error message or details for testimonials loading errors.
+     * @type {string}
+     */
+    const [error_works, setError_works] = React.useState("");
+
+
 
     /**
      * @function handleWorkFilter - Function for handling the work filter functionality.
@@ -75,20 +90,19 @@ const Work = () => {
      */
     React.useEffect(() => {
         const query = '*[_type == "works"]';
-        //Todo: Add proper error handling
         client.fetch(query).then((data) => {
             setWorks(data)
             setFilterWork(data);
-            console.log('Works:', {works})
+            setIsError_works(false)
         }).catch(error => {
-            console.log(`Failed to fetch works: ${error}`)
+            setIsError_works(true)
+            setError_works(error)
         })
         }, []);
 
     return (
         <>
             <h2 className="head-text"> My Creative <span>Portfolio</span> Section</h2>
-
             <div className="app__work-filter">
                 {['Java', 'Web App', 'Mobile App', 'ReactJS','All'].map((item, index) => (
                     <div
@@ -100,14 +114,19 @@ const Work = () => {
                     </div>
                 ))}
             </div>
-            {console.log(`Filter work: ${works.length}`)}
             <motion.div
                 animate={animateCard}
                 transition={{duration: 0.5, delayChildren: 0.5}}
                 className="app__work-portfolio"
             >
                 {works.length === 0 && <CircularProgress/>}
-                {works.length > 0 && filterWork.length > 0 && filterWork.map((work, index) => (
+                {isError_works &&
+                    <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        :( Looks like something went wrong: <br/> {error_works}
+                    </Alert>
+                }
+                {works.length && filterWork.map((work, index) => (
                     <div className="app__work-item app__flex" key={index}>
                         <div className="app__work-img app__flex">
                             <img src={urlFor(work.imgUrl)} alt={work.name} />
