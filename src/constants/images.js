@@ -40,6 +40,8 @@ import spotify from '../assets/Images/spotify.png';
 import net from '../assets/Images/net.png';
 import bgIMG_decal from '../assets/Images/bgIMG_decal.png'
 import bgIMG_decal2 from '../assets/Images/bgIMG_decal2.png'
+import bgIMG_decalAlt from '../assets/Images/bgIMG_decalAlt.png'
+
 
 
 // Assign the object to a variable
@@ -82,7 +84,9 @@ const images = {
     spotify,
     net,
     bgIMG_decal,
-    bgIMG_decal2
+    bgIMG_decal2,
+    bgIMG_decalAlt
+
 };
 
 // Export the variable

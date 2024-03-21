@@ -115,7 +115,7 @@
     align-items: flex-end;
     flex-direction: column;
 
-    background: url('../../assets/Images/bgWhite.png');
+    background: url('../../assets/Images/bgNav.png');
     background-color: var(--white-color);
     background-size: cover;
     background-repeat: repeat;
@@ -144,6 +144,7 @@
 
     li {
       margin: 1rem;
+      color: #030303;
 
       a {
         color: var(--gray-color);

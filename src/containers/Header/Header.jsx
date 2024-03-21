@@ -85,6 +85,13 @@ const Header = () => {
                     alt="footer"
                     className="app__header-decal"
                 />
+                <motion.img
+                    whileInView={{scale: [0, 1]}}
+                    transition={{duration: 1, ease: 'easeInOut'}}
+                    src={images.bgIMG_decalAlt}
+                    alt="footer"
+                    className="app__header-decal-alt"
+                />
             </motion.div>
 
             <motion.div

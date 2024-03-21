@@ -94,7 +94,7 @@ const Navbar = () => {
                         <HiX onClick={handleMenuClose}/>
                         <ul className="app__navbar-links">
                             {navBarItems.map((item) => (
-                                <li key={item}>
+                                <li key={item} >
                                     {renderLink(item)}
                                 </li>
 
