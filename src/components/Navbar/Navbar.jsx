@@ -38,8 +38,8 @@ const Navbar = () => {
      * Variants to specify animation behaviours.
      */
     const variants = {
-        open: { opacity: 1, x: 0 },
-        closed: { opacity: 0, x: "100%" },
+        open: { opacity: 1, x: "3%" },
+        closed: { opacity: 0, x: "99%" },
     }
 
     /**
@@ -86,7 +86,7 @@ const Navbar = () => {
             <div className="app__navbar-menu">
                 <HiMenuAlt4 onClick={handleMenuOpen}/>
                     <motion.div
-                        initial={{x: "100%"}}
+                        initial={{x: "99%"}}
                         animate={toggle ? "open" : "closed"}
                         variants={variants}
                         transition={{duration: 0.5, ease: "easeInOut"}}
@@ -100,7 +100,6 @@ const Navbar = () => {
 
                             ))}
                         </ul>
-                        >
                     </motion.div>
 
             </div>
