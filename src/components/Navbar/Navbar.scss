@@ -22,12 +22,7 @@
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-  }
-  @media screen and (max-width: 1400px) {
-    padding-top: 0.5rem;
-    height: 70px;
-    width: auto;
+    object-fit: cover;
   }
 }
 
@@ -144,7 +139,6 @@
 
     li {
       margin: 1rem;
-      color: #030303;
 
       a {
         color: var(--gray-color);
