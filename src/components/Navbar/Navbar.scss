@@ -18,6 +18,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: auto; /* Ensure the logo takes up the full width of its parent */
+  height: 100%; /* Let the height adjust according to the logo's aspect ratio */
 
   img {
     width: 100%;
