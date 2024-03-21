@@ -14,14 +14,21 @@ import NavigationDots from "../components/Navigation Dots/NavigationDots";
  * @returns {function} - Higher Order Component
  */
 const AppWrap = (Component, idName, classNames) => function HOC() {
+    const [styles, setStyles] = React.useState({})
+    React.useEffect(() => {
+        if (idName === "testimonial" || idName === "contact") {
+            setStyles({color: "#000"});
+        }
+    }, []);
+
     return (
         <div id={idName} className={`app__container ${classNames}`}>
             <SocialMedia />
             <div className={"app__wrapper app__flex"} >
                 <Component />
                 <div className="copyright">
-                    <p className="p-text">@2024 WJB.DEV</p>
-                    <p className="p-text">All rights reserved</p>
+                    <p className="p-text" style={styles}>@2024 WJB.DEV</p>
+                    <p className="p-text" style={styles}>All rights reserved</p>
                 </div>
             </div>
             <NavigationDots active={idName} />

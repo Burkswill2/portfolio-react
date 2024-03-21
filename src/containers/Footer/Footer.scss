@@ -23,7 +23,7 @@
     padding: 1rem;
     border-radius: 10px;
     cursor: pointer;
-    background-color: #fef4f5;
+    background-color: #ffebc3;
 
     transition: all 0.3s ease-in-out;
 
@@ -60,7 +60,7 @@
 }
 
 .app__footer-cards .app__footer-card:last-child {
-  background-color: #f2f7fb;
+  background-color: #c1ced8;
 }
 
 .app__footer-form {
@@ -74,7 +74,7 @@
     margin: 0.75rem 0;
     border-radius: 10px;
     cursor: pointer;
-    background-color: var(--primary-color);
+    background-color: var(--field-color);
 
     transition: all 0.3s ease-in-out;
 
@@ -89,8 +89,7 @@
       padding: 0.95rem;
       border: none;
       border-radius: 7px;
-      background-color: var(--primary-color);
-
+      background-color: var(--field-color);
       font-family: var(--font-base);
       color: var(--secondary-color);
       outline: none;
@@ -110,7 +109,7 @@
     background-color: var(--secondary-color);
 
     font-weight: 500;
-    color: var(--white-color);
+    color: var(--black-color);
     outline: none;
     margin: 2rem 0 0 0;
     font-family: var(--font-base);

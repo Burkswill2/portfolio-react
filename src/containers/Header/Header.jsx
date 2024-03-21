@@ -48,13 +48,13 @@ const Header = () => {
                     <div className="badge-cmp app__flex">
                         <span>👋🏾</span>
                         <div style={{marginLeft: 20}}>
-                            <p className="p-text"> Hi there! I'm</p>
+                            <p className="p-text" style={{color: "#fff"}}> Hi there! I'm</p>
                             <h1 className="head-text">Will</h1>
                         </div>
                     </div>
                     <div className="tag-cmp app__flex">
-                        <p className="p-text">Full-stack</p>
-                        <p className="p-text">Software Developer</p>
+                        <p className="p-text" style={{color: "#fff"}}>Full-stack</p>
+                        <p className="p-text" style={{color: "#fff"}}>Software Developer</p>
                     </div>
                 </div>
             </motion.div>
@@ -64,13 +64,26 @@ const Header = () => {
                 transition={{duration: 0.5, delayChildren: 0.5}}
                 className="app__header-img"
             >
-                <img src={images.profile} alt="profile_bg" />
                 <motion.img
                     whileInView={{scale: [0, 1]}}
                     transition={{duration: 1, ease: 'easeInOut'}}
-                    src={images.circle}
-                    alt="profile_circle"
-                    className="overlay_circle"
+                    src={images.bgIMG_decal2}
+                    alt="memoji"
+                    className="app__header-decal2"
+                />
+                <motion.img
+                    whileInView={{scale: [0, 1]}}
+                    transition={{duration: 1, ease: 'easeInOut'}}
+                    src={images.profile}
+                    alt="memoji"
+                    className="app__header-memoji"
+                />
+                <motion.img
+                    whileInView={{scale: [0, 1]}}
+                    transition={{duration: 1, ease: 'easeInOut'}}
+                    src={images.bgIMG_decal}
+                    alt="footer"
+                    className="app__header-decal"
                 />
             </motion.div>
 
