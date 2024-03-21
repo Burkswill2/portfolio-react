@@ -179,4 +179,4 @@ const Work = () => {
 
 export default AppWrap(
     MotionWrap(Work, 'app__work'),
-    'work', "app__primarybg");
+    'work', "app__blue2blk");

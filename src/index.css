@@ -4,12 +4,16 @@
   --font-base: "DM Sans", sans-serif;
 
   --primary-color: #edf2f8;
-  --secondary-color: #313bac;
+  --secondary-color: #5f8971;
   --black-color: #030303;
   --lightGray-color: #e4e4e4;
   --gray-color: #6b7688;
   --brown-color: #46364a;
   --white-color: #ffffff;
+  --steel-color: #a2a8b3;
+  --earth-color: #464c24;
+  --field-color: #dce2cf;
+
   --section-overlay: rgba(0,0,0,0.7);
   --background-overlay: rgba(0,0,0,0.2);
 }

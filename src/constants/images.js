@@ -17,6 +17,9 @@ import redux from '../assets/Images/redux.png';
 import sass from '../assets/Images/sass.png';
 import typescript from '../assets/Images/typescript.png';
 import vue from '../assets/Images/vue.png';
+import gray2wht from '../assets/Images/gray2wht.png'
+import blue2blk from '../assets/Images/blue2blk.png';
+import blk2blue from '../assets/Images/blk2blue.png';
 
 import about01 from '../assets/Images/about01.png';
 import about02 from '../assets/Images/about02.png';
@@ -35,6 +38,11 @@ import nb from '../assets/Images/nb.png';
 import skype from '../assets/Images/skype.png';
 import spotify from '../assets/Images/spotify.png';
 import net from '../assets/Images/net.png';
+import bgIMG_decal from '../assets/Images/bgIMG_decal.png'
+import bgIMG_decal2 from '../assets/Images/bgIMG_decal2.png'
+import bgIMG_decalAlt from '../assets/Images/bgIMG_decalAlt.png'
+
+
 
 // Assign the object to a variable
 const images = {
@@ -57,6 +65,9 @@ const images = {
     sass,
     typescript,
     vue,
+    gray2wht,
+    blue2blk,
+    blk2blue,
     about01,
     about02,
     about03,
@@ -72,6 +83,10 @@ const images = {
     skype,
     spotify,
     net,
+    bgIMG_decal,
+    bgIMG_decal2,
+    bgIMG_decalAlt
+
 };
 
 // Export the variable

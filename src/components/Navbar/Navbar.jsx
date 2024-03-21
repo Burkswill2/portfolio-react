@@ -18,7 +18,7 @@ const Navbar = () => {
     const renderLink = (item) => {
         if (navBarItems.includes(item)) {
             if (location.pathname === '/') {
-                return <a href={`#${item}`}>{item}</a>;
+                return <a href={`#${item}`} style={{color: '#fff'}}>{item}</a>;
             } else {
                 return <Link to={`/#${item}`}>{item}</Link>;
             }
@@ -94,7 +94,7 @@ const Navbar = () => {
                         <HiX onClick={handleMenuClose}/>
                         <ul className="app__navbar-links">
                             {navBarItems.map((item) => (
-                                <li key={item}>
+                                <li key={item} >
                                     {renderLink(item)}
                                 </li>
 
